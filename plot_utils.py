@@ -43,6 +43,7 @@ VALENCE_TRAIT_PAIRS = [
     ("Articulation", "Incoherence"),
     ("Determination", "Laziness"),
 ]
+VALENCE_TRAIT_ORDER = [trait for pair in VALENCE_TRAIT_PAIRS for trait in pair]
 
 SELF_CONSISTENCY_TRAITS = [
     "Aggression",

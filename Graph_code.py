@@ -1,16 +1,18 @@
 # In[1]:
 # Install Libertinus fonts manually from GitHub release
-!wget https://github.com/alerque/libertinus/releases/download/v7.040/Libertinus-7.040.zip
-!unzip -q -o Libertinus-7.040.zip
-!mkdir -p /usr/share/fonts/opentype/libertinus
-# Copy OTF files to system fonts directory
-!find Libertinus-7.040 -name "*.otf" -exec cp {} /usr/share/fonts/opentype/libertinus/ \;
+# Notebook install commands (left here for reference; prefer running from a shell
+# before using the notebook).
+# !wget https://github.com/alerque/libertinus/releases/download/v7.040/Libertinus-7.040.zip
+# !unzip -q -o Libertinus-7.040.zip
+# !mkdir -p /usr/share/fonts/opentype/libertinus
+# # Copy OTF files to system fonts directory
+# !find Libertinus-7.040 -name "*.otf" -exec cp {} /usr/share/fonts/opentype/libertinus/ \;
 
-# Rebuild the font cache
-!fc-cache -fv
+# # Rebuild the font cache
+# !fc-cache -fv
 
-# Verify installation
-!fc-list | grep -i libertinus
+# # Verify installation
+# !fc-list | grep -i libertinus
 
 # In[2]:
 import pandas as pd
@@ -1576,7 +1578,7 @@ plt.savefig("cohens_d_finetuned.pdf")
 plt.show()
 
 # In[9]:
-!rm -rf ~/.cache/matplotlib
+# !rm -rf ~/.cache/matplotlib
 print("Matplotlib font cache cleared.")
 
 # In[10]:
@@ -3165,4 +3167,3 @@ plt.savefig("COHENS_D_overt_relative_models.pdf", bbox_inches="tight")
 plt.show()
 
 print("Saved figure as COHENS_D_overt_relative_models.pdf")
-

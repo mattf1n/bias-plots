@@ -65,12 +65,17 @@ all_vals = [direct_df, indirect_df, ov_direct_df, ov_indirect_df]
 vmin = min(df.min().min() for df in all_vals)
 vmax = max(df.max().max() for df in all_vals)
 
-plot_cf_gap_heatmaps(
-    indirect_df,
-    direct_df,
-    indirect_annots,
-    direct_annots,
-    outfile=ROOT / "plots" / "CF_Gap_Heatmaps_covert.pdf",
-    vmin=vmin,
-    vmax=vmax,
-)
+def main() -> None:
+    plot_cf_gap_heatmaps(
+        indirect_df,
+        direct_df,
+        indirect_annots,
+        direct_annots,
+        outfile=ROOT / "plots" / "CF_Gap_Heatmaps_covert.pdf",
+        vmin=vmin,
+        vmax=vmax,
+    )
+
+
+if __name__ == "__main__":
+    main()

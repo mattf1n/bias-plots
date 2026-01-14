@@ -9,8 +9,10 @@ from plot_utils import (
     MODEL_COLORS,
     MODEL_ORDER,
     VALENCE_TRAIT_PAIRS,
+    VALENCE_TRAIT_ORDER,
     build_cf_annotations,
     configure_matplotlib,
+    darken_color,
     load_cf_gap_table,
     load_ci_ranges,
     load_cohens_d_excel,
@@ -138,10 +140,7 @@ def compare_cf_gaps():
 # ---------------------------------------------------------------------------
 def _plot_cohens_d_on_axis(ax, df, title):
     models_in_order = MODEL_ORDER
-    neg_colors = {
-        m: "#" + "".join(f"{int(int(MODEL_COLORS[m][i:i+2], 16) * 0.7):02X}" for i in (1, 3, 5))
-        for m in models_in_order
-    }
+    neg_colors = {model: darken_color(MODEL_COLORS[model], factor=0.70) for model in models_in_order}
 
     x = np.arange(len(VALENCE_TRAIT_PAIRS))
     bar_width = 0.22
@@ -191,11 +190,8 @@ def compare_cohens_d():
     covert_abs_sheets = {"Llama": "covert_indirect_llama", "GPT": "covert_indirect_GPT", "Deepseek": "covert_indirect_deepseek"}
     overt_abs_sheets = {"Llama": "overt_indirect_llama", "GPT": "overt_indirect_GPT", "Deepseek": "overt_indirect_deepseek"}
 
-    covert_abs = load_cohens_d_excel(EXCEL_PATH, covert_abs_sheets)
-    overt_abs = load_cohens_d_excel(EXCEL_PATH, overt_abs_sheets)
-    trait_order = [t for pair in VALENCE_TRAIT_PAIRS for t in pair]
-    covert_abs = covert_abs.loc[trait_order]
-    overt_abs = overt_abs.loc[trait_order]
+    covert_abs = load_cohens_d_excel(EXCEL_PATH, covert_abs_sheets).loc[VALENCE_TRAIT_ORDER]
+    overt_abs = load_cohens_d_excel(EXCEL_PATH, overt_abs_sheets).loc[VALENCE_TRAIT_ORDER]
 
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.5), sharey=True)
     _plot_cohens_d_on_axis(axes[0], covert_abs, "Covert Absolute")
@@ -211,8 +207,8 @@ def compare_cohens_d():
     covert_rel_sheets = {"Llama": "covert_direct_llama", "GPT": "covert_direct_GPT", "Deepseek": "covert_direct_deepseek"}
     overt_rel_sheets = {"Llama": "overt_direct_llama", "GPT": "overt_direct_GPT", "Deepseek": "overt_direct_deepseek"}
 
-    covert_rel = load_cohens_d_excel(EXCEL_PATH, covert_rel_sheets).loc[trait_order]
-    overt_rel = load_cohens_d_excel(EXCEL_PATH, overt_rel_sheets).loc[trait_order]
+    covert_rel = load_cohens_d_excel(EXCEL_PATH, covert_rel_sheets).loc[VALENCE_TRAIT_ORDER]
+    overt_rel = load_cohens_d_excel(EXCEL_PATH, overt_rel_sheets).loc[VALENCE_TRAIT_ORDER]
 
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.5), sharey=True)
     _plot_cohens_d_on_axis(axes[0], covert_rel, "Covert Relative")

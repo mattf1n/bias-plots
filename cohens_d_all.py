@@ -7,7 +7,9 @@ from plot_utils import (
     MODEL_COLORS,
     MODEL_ORDER,
     VALENCE_TRAIT_PAIRS,
+    VALENCE_TRAIT_ORDER,
     configure_matplotlib,
+    darken_color,
     load_cohens_d_excel,
 )
 
@@ -19,17 +21,13 @@ EXCEL_PATH = ROOT / "data_files" / "ALL_results_combined-3.xlsx"
 
 
 def load_trait_ordered(sheet_map):
-    trait_order = [t for pair in VALENCE_TRAIT_PAIRS for t in pair]
     df = load_cohens_d_excel(EXCEL_PATH, sheet_map)
-    return df.loc[trait_order]
+    return df.loc[VALENCE_TRAIT_ORDER]
 
 
 def draw_panel(ax, df, title):
     models_in_order = MODEL_ORDER
-    neg_colors = {
-        m: "#" + "".join(f"{int(int(MODEL_COLORS[m][i:i+2], 16) * 0.70):02X}" for i in (1, 3, 5))
-        for m in models_in_order
-    }
+    neg_colors = {model: darken_color(MODEL_COLORS[model], factor=0.70) for model in models_in_order}
     x = np.arange(len(VALENCE_TRAIT_PAIRS))
     bar_width = 0.22
     bars = {model: {"pos": [], "neg": []} for model in models_in_order}

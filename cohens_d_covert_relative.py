@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from plot_utils import VALENCE_TRAIT_PAIRS, configure_matplotlib, load_cohens_d_excel, plot_valence_bars
+from plot_utils import VALENCE_TRAIT_ORDER, configure_matplotlib, load_cohens_d_excel, plot_valence_bars
 
 configure_matplotlib()
 
@@ -13,11 +13,14 @@ sheets = {
     "Deepseek": "covert_direct_deepseek",
 }
 
-cohens_d = load_cohens_d_excel(EXCEL_PATH, sheets)
-trait_order = [trait for pair in VALENCE_TRAIT_PAIRS for trait in pair]
-cohens_d = cohens_d.loc[trait_order]
+cohens_d = load_cohens_d_excel(EXCEL_PATH, sheets).loc[VALENCE_TRAIT_ORDER]
 
-plot_valence_bars(
-    cohens_d,
-    outfile=ROOT / "plots" / "COHENS_D_covert_relative_models.pdf",
-)
+def main() -> None:
+    plot_valence_bars(
+        cohens_d,
+        outfile=ROOT / "plots" / "COHENS_D_covert_relative_models.pdf",
+    )
+
+
+if __name__ == "__main__":
+    main()
